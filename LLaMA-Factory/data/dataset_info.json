@@ -1,0 +1,29 @@
+{
+  "limr_stage_1_preference": {
+    "file_name": "limr_stage_1_preference.json",
+    "ranking": true,
+    "columns": { 
+      "prompt": "instruction",
+      "chosen": "chosen",
+      "rejected": "rejected"
+    }
+  },
+  "limr_stage_1_preference_1_5B": {
+    "file_name": "limr_stage_1_preference_1_5B.json",
+    "ranking": true,
+    "columns": {
+      "prompt": "instruction",
+      "chosen": "chosen",
+      "rejected": "rejected"
+    }
+  },
+  "fixed_stage_1_preference": {
+    "file_name": "fixed_stage_1_preference.json",
+    "ranking": true,
+    "columns": {
+      "prompt": "instruction",
+      "chosen": "chosen",
+      "rejected": "rejected"
+    }
+  }
+}

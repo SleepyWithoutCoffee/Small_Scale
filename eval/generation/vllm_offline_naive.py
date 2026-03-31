@@ -1,0 +1,112 @@
+from time import sleep
+from datetime import datetime
+import pandas as pd
+import argparse
+from vllm import LLM, SamplingParams
+from transformers import AutoTokenizer
+import socket
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
+from utils.utils import offline_eval_formatter, load_config, get_model_path, get_output_path, patch_length, compose_file_name
+
+
+def generate(
+    eval_data: pd.DataFrame,
+    model_path: str,
+    engine_args: dict,
+    sampling_params: dict
+) -> None:
+    """
+    Worker process for distributed inference.
+    Returns results through the result_queue.
+    """
+    sampling_params = SamplingParams(**sampling_params)
+
+
+    llm = LLM(model=model_path,
+                tokenizer=model_path,
+                trust_remote_code=True,
+                **engine_args)
+
+    outputs = llm.chat(
+        messages=eval_data['prompt'].tolist(),
+        sampling_params=sampling_params,
+        use_tqdm=True
+    )
+    
+    # Extract the generated text from outputs
+    model_outputs = []
+    for output in outputs:
+        model_outputs.append(output.outputs[0].text)
+    return model_outputs
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="generation_code")
+
+    parser.add_argument('--config', type=str, required=True,
+                        help='Path of the configuration file.')
+    parser.add_argument('--dataset_name', type=str, required=False,
+                        help='Path of the data source file. Override the data source in the config file.')
+    parser.add_argument('--model_name', type=str, required=False,
+                        help='Name of the model. Override the model name in the config file.')
+    # parser.add_argument('--dev', type=bool, required=False,
+    #                     help='Whether the model is in development mode. Default is False.')
+    return parser.parse_args()
+
+
+if __name__ == "__main__":
+    # set_start_method('spawn', force=True)
+    DEFAULT_ENGINE_ARGS = {"gpu_memory_utilization": 0.95, "tensor_parallel_size": 1}
+    DEFAULT_SAMPLING_PARAMS = {"temperature": 0.6, "top_p": 0.95, "max_tokens": 4096, "seed": None, "skip_special_tokens": False, "spaces_between_special_tokens": False}
+    args = parse_args()
+    config = load_config(args.config)
+
+    dataset_name = args.dataset_name or config.get('dataset_name', None)
+    model_name = args.model_name or config.get('model_name', None)
+    if dataset_name is None:
+        raise ValueError("Dataset name is required.")
+    if model_name is None:
+        raise ValueError("Model name is required.")
+
+    engine_args = config.get('engine_args', DEFAULT_ENGINE_ARGS)
+    sampling_params = config.get('sampling_params', DEFAULT_SAMPLING_PARAMS)
+
+    num_epochs = config.get('num_epochs', 1)
+
+    generation_log_dir = config.get('generation_log_dir', None)
+
+    time_stamp = datetime.now().strftime("%m%d%H%M")
+    eval_data, task = offline_eval_formatter(dataset_name)
+    log_file_path = compose_file_name(
+        generation_log_dir, task, dataset_name, model_name, f'{time_stamp}_{num_epochs}.log')
+    with open(log_file_path, "w") as log_file:
+        log_file.write(f'{config}\n\n')
+
+    model_path = get_model_path(model_name)
+    tokenizer = AutoTokenizer.from_pretrained(model_path)
+
+    if num_epochs > 1:
+        eval_data = pd.concat([eval_data] * num_epochs, ignore_index=True)
+
+    model_outputs = generate(
+        eval_data,
+        model_path,
+        engine_args,
+        sampling_params
+    )
+
+    if model_outputs is None:
+        print("Generation failed. Exiting...")
+        exit(1)
+
+    eval_data['model_output'] = model_outputs
+
+    # Save results
+    _, data_output_path = get_output_path()
+    output_file_path = compose_file_name(
+        data_output_path, task, dataset_name, model_name, f'{time_stamp}_{num_epochs}.parquet')
+    print("Adding tokenized outputs...")
+    eval_data = patch_length(eval_data, tokenizer)
+    eval_data.to_parquet(output_file_path, index=False)
+    print(f"Results saved to {output_file_path}")

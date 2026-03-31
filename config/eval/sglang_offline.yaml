@@ -1,0 +1,21 @@
+engine_args:
+  # gpu_memory_utilization: 0.95
+  tp_size: 2
+  dp_size: 4
+  random_seed:
+
+sampling_params:
+  temperature: 0.6
+  top_p: 0.95
+  top_k:
+  min_p:
+  max_new_tokens: 32768
+  # seed: null
+  skip_special_tokens: false
+  spaces_between_special_tokens: false
+
+chat_template_args:
+num_gpus: 8
+num_epochs: 1
+
+generation_log_dir: "/path/to/output/logs/generation"

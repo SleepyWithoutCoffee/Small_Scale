@@ -1,0 +1,18 @@
+max_tokens: 32768
+prune: false
+metric: acc
+llm_as_judge:
+  enable: False
+  judge_model:
+    model_name: gemini-3-pro-preview
+    api_key: "your-api-key"
+    api_url: "https://api.openai.com/v1/chat/completions"
+    api_type: "openai"
+    model_kwargs:
+      temperature: 0.6
+      top_p: 0.95
+      max_tokens: 32768
+      seed: null
+  epochs: 1
+
+result_log_dir: /path/to/output/logs/results

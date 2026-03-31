@@ -1,0 +1,62 @@
+{
+    "math": {
+        "task": "math",
+        "default_metric": "acc" 
+    },
+    "math-500": {
+        "task": "math",
+        "default_metric": "acc"
+    },
+    "aime24": {
+        "task": "math",
+        "default_metric": "avg@16"
+    },
+    "aime25": {
+        "task": "math",
+        "default_metric": "avg@16"
+    },
+    "amc23": {
+        "task": "math",
+        "default_metric": "avg@16"
+    },
+    "olympiadbench": {
+        "task": "math",
+        "default_metric": "acc"
+    },
+    "minervamath": {
+        "task": "math",
+        "default_metric": "acc"
+    },
+    "gsm8k": {
+        "task": "math",
+        "default_metric": "acc"
+    },
+    "limr": {
+        "task": "math",
+        "default_metric": "acc"
+    },
+    "hle-math": {
+        "task": "math",
+        "default_metric": "acc"
+    },
+    "mmlu": {
+        "task": "mcq",
+        "default_metric": "acc"
+    },
+    "gpqa-d": {
+        "task": "mcq",
+        "default_metric": "acc"
+    },
+    "winogrande": {
+        "task": "mcq",
+        "default_metric": "acc"
+    },
+    "arc-c": {
+        "task": "mcq",
+        "default_metric": "acc"
+    },
+    "lcb": {
+        "task": "code",
+        "default_metric": "pass@1"
+    }
+}

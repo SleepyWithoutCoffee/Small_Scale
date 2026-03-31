@@ -1,0 +1,13 @@
+data_dir: "/path/to/data"
+model_dir: "/path/to/model"
+eval_dir: 
+pkg_dir: 
+  llama_factory:
+  verl: 
+  temp:
+output_dir: 
+  models: "/path/to/output/model"
+  data: "/path/to/output/data"
+  results: "/path/to/output/results"
+scripts: 
+log_dir: "/path/to/output/logs"

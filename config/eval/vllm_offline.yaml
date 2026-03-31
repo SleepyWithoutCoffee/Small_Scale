@@ -1,0 +1,24 @@
+engine_args:
+  gpu_memory_utilization: 0.85
+  tensor_parallel_size: 2
+  seed: 
+  max_num_seqs: 128
+  # data_parallel_size: 2
+
+sampling_params:
+  temperature: 0.6
+  top_p: 0.95
+  top_k: 
+  min_p:
+  max_tokens: 32768
+  seed: 
+  skip_special_tokens: false
+  spaces_between_special_tokens: false
+  
+dp_size: 4
+dp_shuffle: true
+
+num_gpus: 8
+num_epochs: 1
+
+generation_log_dir: "/path/to/output/logs/generation"
