@@ -265,11 +265,11 @@ If you find this repository helpful, please cite our paper.
 
 ```
 @inproceedings{
-hong2026pruning,
-title={Pruning Long Chain-of-Thought of Large Reasoning Models via Small-Scale Preference Optimization},
-author={Bin Hong and Jiayu Liu and Kai Zhang and Jianwen Sun and Mengdi Zhang and Zhenya Huang},
-booktitle={The Fourteenth International Conference on Learning Representations},
-year={2026},
-url={https://openreview.net/forum?id=8xSU8Oscvg}
+    hong2026pruning,
+    title={Pruning Long Chain-of-Thought of Large Reasoning Models via Small-Scale Preference Optimization},
+    author={Bin Hong and Jiayu Liu and Kai Zhang and Jianwen Sun and Mengdi Zhang and Zhenya Huang},
+    booktitle={The Fourteenth International Conference on Learning Representations},
+    year={2026},
+    url={https://openreview.net/forum?id=8xSU8Oscvg}
 }
 ```
