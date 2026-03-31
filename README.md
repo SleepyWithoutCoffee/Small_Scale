@@ -212,25 +212,26 @@ python eval/judgers/autojudger.py \
 Use LLaMA-Factory for DPO training. First, modify the paths and training hyperparameters in `config/train/llama_factory/dpo.yaml`, then set up the environment and start training:
 
 ```bash
-# Set up the environment (adjust the path according to your conda environment)
-export PATH="/path/to/conda/envs/codelab/bin:$PATH"
-export LD_LIBRARY_PATH="/path/to/conda/envs/codelab/lib:$LD_LIBRARY_PATH"
+# Set up the environment (adjust CUDA_VISIBLE_DEVICES according to your environment)
+export CUDA_VISIBLE_DEVICES="0,1,2,3"
 
 # Start training with LLaMA-Factory (refer to the LLaMA-Factory documentation for specific commands)
 llamafactory-cli train config/train/llama_factory/dpo.yaml
 ```
 
-**Key Training Parameters in `dpo.yaml`**:
+**Training Parameters in `dpo.yaml`**:
 
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| `model_name_or_path` | - | Base model path (must be filled in) |
-| `pref_loss` | lcpo | Preference learning loss function |
-| `pref_beta` | 0.1 | DPO beta parameter |
-| `learning_rate` | 5e-6 | Learning rate |
-| `num_train_epochs` | 3.0 | Number of training epochs |
-| `cutoff_len` | 2300 | Maximum sequence truncation length |
-| `template` | deepseek3 | Conversation template |
+| Parameter | Description |
+|-----------|-------------|
+| `model_name_or_path` | Base model path |
+| `pref_loss` | Preference learning loss function |
+| `pref_beta` | Bradley-Terry loss weight |
+| `learning_rate` | Learning rate |
+| `lr_scheduler_type` | Learning rate scheduler type |
+| `warmup_ratio` | warmup_ratio |
+| `num_train_epochs` | Number of training epochs |
+| `cutoff_len` | Maximum sequence truncation length |
+| `template` | Conversation template |
 
 ## Inference Parameter Configuration
 
