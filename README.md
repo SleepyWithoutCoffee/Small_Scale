@@ -254,3 +254,22 @@ Other adjustable parameters (modify in the corresponding yaml file):
 | `dp_size` | Number of data-parallel processes |
 | `num_gpus` | Number of GPUs to use |
 | `num_epochs` | Number of inference repetitions per data sample |
+
+## Acknowledgements
+
+My heartfelt gratitude goes to Shengyu Ye (@ysy-phoenix), Hao Jiang (@TechxGenus) and Junwei Lan (@Lan13) for their invaluable assistance.
+
+## Citation
+
+If you find this repository helpful, please cite our paper.
+
+```
+@inproceedings{
+hong2026pruning,
+title={Pruning Long Chain-of-Thought of Large Reasoning Models via Small-Scale Preference Optimization},
+author={Bin Hong and Jiayu Liu and Kai Zhang and Jianwen Sun and Mengdi Zhang and Zhenya Huang},
+booktitle={The Fourteenth International Conference on Learning Representations},
+year={2026},
+url={https://openreview.net/forum?id=8xSU8Oscvg}
+}
+```
