@@ -8,7 +8,7 @@ We provide a toolkit for offline inference evaluation and training of large lang
 ## Directory Structure
 
 ```
-prune/
+root_dir/
 ├── config/                          # Configuration files
 │   ├── path.yaml                    # ★ Global path configuration (must be filled in)
 │   ├── dataset/
@@ -66,7 +66,7 @@ Before use, you must replace all `/path/to/` prefixes with your actual paths. Th
 
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `data_dir` | Root directory for test data | `/home/user/prune/data` |
+| `data_dir` | Root directory for test data | `/home/user/data` |
 | `model_dir` | Model storage directory | `/home/user/models` |
 | `output_dir.models` | Training output model directory | `/home/user/output/model` |
 | `output_dir.data` | Inference result output directory | `/home/user/output/data` |
